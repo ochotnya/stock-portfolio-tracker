@@ -30,7 +30,10 @@ function Home() {
   const matches = useMediaQuery("(min-width:1000px)");
 
   const addCompany = (newCompany: ICompanyData) => {
-    setSavedCompanies([...savedCompanies, newCompany]);
+    const filter = savedCompanies.filter(
+      (item) => item["1. symbol"] === newCompany["1. symbol"]
+    );
+    if (filter.length === 0) setSavedCompanies([...savedCompanies, newCompany]);
   };
 
   const removeCompany = (symbol: string) => {

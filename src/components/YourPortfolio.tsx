@@ -52,6 +52,15 @@ function YourPortfolio(props: IPortfolio) {
   const navigate = useNavigate();
   const matches = useMediaQuery("(min-width:1000px)");
 
+  const compare = (a: ICompanyData, b: ICompanyData) => {
+    if (a["1. symbol"] < b["1. symbol"]) {
+      return -1;
+    }
+    if (a["1. symbol"] > b["1. symbol"]) {
+      return 1;
+    }
+    return 0;
+  };
   return (
     <Box
       display="flex"
@@ -72,7 +81,7 @@ function YourPortfolio(props: IPortfolio) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.data.map((item, index) => (
+            {props.data.sort(compare).map((item, index) => (
               <TableRow key={index} className={classes.row}>
                 <TableCell
                   onClick={() =>
