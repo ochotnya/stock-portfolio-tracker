@@ -52,6 +52,13 @@ function CompanyDetails() {
     setLoading(false);
   };
 
+  const formatValue = (value: string) => {
+    const valueNumber = parseInt(value);
+    let formattedValue = valueNumber / 1000000000000;
+    if (formattedValue > 0.01) return formattedValue.toFixed(2) + " bln";
+    formattedValue = valueNumber / 1000000;
+    return formattedValue.toFixed(2) + " mln";
+  };
   useEffect(() => {
     loadData();
   }, []);
@@ -74,7 +81,7 @@ function CompanyDetails() {
             <Divider />
             <div className={classes.details}>Address: {info.Address}</div>
             <div className={classes.details}>
-              Market Capitalization: {info.MarketCapitalization}
+              Market Capitalization: {formatValue(info.MarketCapitalization)}
             </div>
             <p>{info.Description}</p>
           </Box>
