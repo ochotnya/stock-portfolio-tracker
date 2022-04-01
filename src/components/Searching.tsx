@@ -51,11 +51,13 @@ function Searching(props: ISearching) {
 
   const getData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
-    const requestLink = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${searchPhrase}&apikey=${process.env.REACT_APP_API_KEY}`;
-    const response = await axios.get<IResponse>(requestLink);
-    setSuggestions(response.data.bestMatches);
-    setLoading(false);
+    if (searchPhrase !== "") {
+      setLoading(true);
+      const requestLink = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${searchPhrase}&apikey=${process.env.REACT_APP_API_KEY}`;
+      const response = await axios.get<IResponse>(requestLink);
+      setSuggestions(response.data.bestMatches);
+      setLoading(false);
+    }
   };
 
   return (
