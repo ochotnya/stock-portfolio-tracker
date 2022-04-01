@@ -11,7 +11,13 @@ const styles = {
     justifyContent: "center",
   },
   card: {
-    width: "70%",
+    width: "95%",
+    maxWidth: "800px",
+    padding: "1rem",
+    lineHeight: "1.5rem",
+  },
+  cardFullWidth: {
+    width: "90%",
     padding: "1rem",
     lineHeight: "1.5rem",
   },

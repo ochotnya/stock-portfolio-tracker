@@ -3,14 +3,13 @@ import { makeStyles } from "@material-ui/styles";
 import ICompanyData from "../interfaces/ICompanyData";
 import Searching from "./Searching";
 import YourPortfolio from "./YourPortfolio";
-import { Divider } from "@material-ui/core";
+import { Box, Divider } from "@material-ui/core";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const styles = {
-  root: {
-    display: "flex",
+  content: {
     alignItems: "top",
     justifyContent: "center",
-    height: "100vh",
     gap: "3rem",
     marginTop: "3rem",
   },
@@ -28,6 +27,7 @@ const useStyles = makeStyles(styles);
 function Home() {
   const classes = useStyles();
   const [savedCompanies, setSavedCompanies] = useState<ICompanyData[]>([]);
+  const matches = useMediaQuery("(min-width:1000px)");
 
   const addCompany = (newCompany: ICompanyData) => {
     setSavedCompanies([...savedCompanies, newCompany]);
@@ -46,10 +46,14 @@ function Home() {
     <div className={classes.container}>
       <h1 className={classes.header}>My stocks</h1>
       <Divider />
-      <div className={classes.root}>
+      <Box
+        display="flex"
+        className={classes.content}
+        flexDirection={matches ? "row" : "column"}
+      >
         <Searching addCompanyFcn={addCompany} />
         <YourPortfolio deleteFcn={removeCompany} data={savedCompanies} />
-      </div>
+      </Box>
     </div>
   );
 }

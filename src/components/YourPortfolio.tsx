@@ -7,6 +7,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  useMediaQuery,
 } from "@material-ui/core";
 import React from "react";
 import ICompanyData from "../interfaces/ICompanyData";
@@ -24,6 +25,10 @@ const styles = {
   container: {
     width: "40%",
     height: "70%",
+  },
+  fullWidth: {
+    width: "100%",
+    maxHeight: "70%",
   },
   head: {
     backgroundColor: "rgb(85, 182, 238)",
@@ -45,9 +50,14 @@ const useStyles = makeStyles(styles);
 function YourPortfolio(props: IPortfolio) {
   const classes = useStyles();
   const navigate = useNavigate();
+  const matches = useMediaQuery("(min-width:1000px)");
 
   return (
-    <Box display="flex" flexDirection="column" className={classes.container}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      className={matches ? classes.container : classes.fullWidth}
+    >
       <TableContainer component={Paper}>
         <Table>
           <TableHead className={classes.head}>

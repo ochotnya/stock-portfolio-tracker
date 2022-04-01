@@ -1,4 +1,9 @@
-import { Box, CircularProgress, TextField } from "@material-ui/core";
+import {
+  Box,
+  CircularProgress,
+  TextField,
+  useMediaQuery,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import axios from "axios";
 import React, { ChangeEvent, FormEvent, useState } from "react";
@@ -16,12 +21,19 @@ interface IResponse {
 const styles = {
   container: {
     width: "40%",
-    height: "70%",
+    maxHeight: "70%",
   },
   loadingContainer: {
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
+  },
+  scrolling: {
+    overflow: "scroll",
+  },
+  fullWidth: {
+    width: "100%",
+    maxHeight: "70%",
   },
 };
 const useStyles = makeStyles(styles);
@@ -31,6 +43,7 @@ function Searching(props: ISearching) {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [suggestions, setSuggestions] = useState<ICompanyData[]>([]);
   const [loading, setLoading] = useState(false);
+  const matches = useMediaQuery("(min-width:1000px)");
 
   const updatePhrase = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchPhrase(e.target.value);
@@ -46,7 +59,11 @@ function Searching(props: ISearching) {
   };
 
   return (
-    <Box display="flex" flexDirection="column" className={classes.container}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      className={matches ? classes.container : classes.fullWidth}
+    >
       <form onSubmit={getData}>
         <TextField
           variant="outlined"
@@ -65,13 +82,15 @@ function Searching(props: ISearching) {
       ) : suggestions.length > 0 ? (
         <>
           <p>Results:</p>
-          {suggestions.map((item, index) => (
-            <Suggestion
-              addEvent={props.addCompanyFcn}
-              data={item}
-              key={index}
-            />
-          ))}
+          <div className={classes.scrolling}>
+            {suggestions.map((item, index) => (
+              <Suggestion
+                addEvent={props.addCompanyFcn}
+                data={item}
+                key={index}
+              />
+            ))}
+          </div>
         </>
       ) : (
         <p>No results</p>
