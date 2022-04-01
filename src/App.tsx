@@ -1,23 +1,16 @@
 import React from "react";
-import "./App.css";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/styles";
-
-const styles = {
-  root: {
-    background: "blue",
-    border: "10px solid black",
-  },
-};
-
-const useStyles = makeStyles(styles);
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import CompanyDetails from "./components/CompanyDetails";
+import Home from "./components/Home";
 
 function App() {
-  const classes = useStyles();
   return (
-    <div className="App">
-      <Button className={classes.root}>test</Button>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/companydetails/:symbol" element={<CompanyDetails />} />
+      </Routes>
+    </Router>
   );
 }
 
